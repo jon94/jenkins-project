@@ -9,7 +9,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    datadog(tags: ["stage;dockerbuild"]) {
+                    datadog(tags: ["stage:dockerbuild"]) {
                         dockerImage = docker.build("$registry:$BUILD_NUMBER")
                     }
                 }
@@ -24,7 +24,14 @@ pipeline {
                         }
                     }
                 }
-            }
+            }            
         }
+        stage('Simulate Error') {
+            steps {
+                script {
+                    exit 1
+                }
+            }
+        }        
     }
 }
