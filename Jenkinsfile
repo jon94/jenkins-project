@@ -8,6 +8,8 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
+                datadog(tags: ["stage:dockerbuild"]) {
+                }
                 script {
                     dockerImage = docker.build("$registry:$BUILD_NUMBER")
                 }
@@ -31,4 +33,3 @@ pipeline {
 //         }
     }
 }
-datadog(tags: ["team:backend", "release:canary"])
