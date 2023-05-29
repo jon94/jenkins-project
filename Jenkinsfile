@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                datadog(tags: ["stage:dockerbuild"]) {
+                datadog(tags: ["pipeline:jenkinsdemo"]) {
                 }
                 script {
                     dockerImage = docker.build("$registry:$BUILD_NUMBER")
@@ -16,9 +16,7 @@ pipeline {
             }
         }    
         stage('Push Docker Image') {
-            steps {
-                datadog(tags: ["stage:dockerpush"]) {
-                }                
+            steps {              
                 script {
                     withDockerRegistry([credentialsId: credentialsId, url: '']) {
                         dockerImage.push()
