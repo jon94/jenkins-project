@@ -7,14 +7,14 @@ pipeline {
     agent any
     stages {
         stage('Build Docker Image') {
-           datadog(tags: ["stage:dockerbuild"]) { 
             steps {
+                datadog(tags: ["stage:dockerbuild"]) {
+                }
                 script {
                     dockerImage = docker.build("$registry:$BUILD_NUMBER")
                 }
             }
-        }
-    }      
+        }    
         stage('Push Docker Image') {
             steps {
                 script {
