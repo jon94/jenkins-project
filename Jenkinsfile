@@ -6,20 +6,22 @@ pipeline {
     }
     agent any
     stages {
-     datadog(tags: ["stage:dockerbuild"]){        
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("$registry:$BUILD_NUMBER")
+                    datadog(tags: ["stage;dockerbuild"]) {
+                        dockerImage = docker.build("$registry:$BUILD_NUMBER")
+                    }
                 }
             }
         }
-     }  
         stage('Push Docker Image') {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: credentialsId, url: '' ]) {
-                        dockerImage.push()
+                    datadog(tags: ["stage:dockerpush"]) {
+                        withDockerRegistry([credentialsId: credentialsId, url: '']) {
+                            dockerImage.push()
+                        }
                     }
                 }
             }
