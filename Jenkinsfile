@@ -18,7 +18,6 @@ pipeline {
                 script {
                     withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
         dockerImage.push()
-                }
             }            
         }
 
