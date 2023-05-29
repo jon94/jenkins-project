@@ -22,12 +22,12 @@ pipeline {
                 }
             }
         }
-        stage('Simulate Error') {
-            steps {
-                script {
-                    error("Error occurred after pushing the Docker image.")
-                }
-            }
-        }
+//         stage('Simulate Error') {
+//             steps {
+//                 script {
+//                     error("Error occurred after pushing the Docker image.")
+//                 }
+//             }
+//         }
     }
 }
