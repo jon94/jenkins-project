@@ -17,6 +17,8 @@ pipeline {
         }    
         stage('Push Docker Image') {
             steps {
+                datadog(tags: ["stage:dockerpush"]) {
+                }                
                 script {
                     withDockerRegistry([credentialsId: credentialsId, url: '']) {
                         dockerImage.push()
