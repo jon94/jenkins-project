@@ -9,29 +9,25 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    datadog(tags: ["stage:dockerbuild"]) {
-                        dockerImage = docker.build("$registry:$BUILD_NUMBER")
-                    }
+                    dockerImage = docker.build("$registry:$BUILD_NUMBER")
                 }
             }
         }
         stage('Push Docker Image') {
             steps {
                 script {
-                    datadog(tags: ["stage:dockerpush"]) {
-                        withDockerRegistry([credentialsId: credentialsId, url: '']) {
-                            dockerImage.push()
-                        }
+                    withDockerRegistry([credentialsId: credentialsId, url: '']) {
+                        dockerImage.push()
                     }
                 }
-            }            
+            }
         }
         stage('Simulate Error') {
             steps {
                 script {
-                    exit 1
+                    error("Error occurred after pushing the Docker image.")
                 }
             }
-        }        
+        }
     }
 }
