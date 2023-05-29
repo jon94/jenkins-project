@@ -6,6 +6,7 @@ pipeline {
     }
     agent any
     stages {
+     datadog(tags: ["stage:dockerbuild"]){        
         stage('Build Docker Image') {
             steps {
                 script {
@@ -13,6 +14,7 @@ pipeline {
                 }
             }
         }
+     }  
         stage('Push Docker Image') {
             steps {
                 script {
