@@ -2,24 +2,25 @@ pipeline {
     environment {
         registry = 'jonlimpw/jenkinsdemoapp'
         dockerImage = ''
+        credentialsId = "dockerhubaccount"
     }
     agent any
     stages {
         stage('Build Docker Image') {
-            agent any
             steps {
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build("$registry:$BUILD_NUMBER")
                 }
             }
+        }
         stage('Push Docker Image') {
-            agent any
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
-        dockerImage.push()
-            }            
+                    withDockerRegistry([ credentialsId: credentialsId, url: '' ]) {
+                        dockerImage.push()
+                    }
+                }
+            }
         }
-
     }
 }
