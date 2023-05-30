@@ -1,5 +1,5 @@
 ## Simulate Error
-Comment line 25-31 from Jenkinsfile
+Comment line 27-33 from Jenkinsfile
 
 ## About
 Sample [Spring Boot](http://projects.spring.io/spring-boot/) application to be used during DevOps 101 trainings workshop sessions
